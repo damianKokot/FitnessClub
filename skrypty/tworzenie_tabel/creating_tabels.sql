@@ -13,7 +13,7 @@ CREATE TABLE users (
   email VARCHAR(200) NOT NULL,
   password VARCHAR(200) NOT NULL,
   permissions ENUM('normal', 'worker', 'admin') NOT NULL DEFAULT 'normal',
-  lastlogin TIMESTAMP NOT NULL,
+  lastlogin TIMESTAMP,
   firstname VARCHAR(200) NOT NULL,
   lastname VARCHAR(200) NOT NULL,
   telephone VARCHAR(200) NOT NULL,
