@@ -1,0 +1,26 @@
+{
+  "name": "fitness-service",
+  "version": "1.0.0",
+  "description": "Aplication to operate Fitness Club classes",
+  "main": "app.js",
+  "scripts": {
+    "test": "test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/damianKokot/FitnessClub.git"
+  },
+  "author": [
+    "Damian Kokot",
+    "Szymon Skoczylas"
+  ],
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/damianKokot/FitnessClub/issues"
+  },
+  "homepage": "https://github.com/damianKokot/FitnessClub#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mysql": "^2.17.1"
+  }
+}
