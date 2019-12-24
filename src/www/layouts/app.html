@@ -13,7 +13,7 @@
 				<li><a href="/#/login">Logowanie</a></li>
 			</ul>
 			<p ng-if='currentUser' class="navbar-text navbar-right">
-				Zalogowany jako: {{currentUser.email}}
+				Zalogowany jako: {{currentUser.firstname}} {{currentUser.lastname}}
 			</p>
 			<div ng-if='currentUser' class="navbar-btn navbar-right">
 				<button ng-click="logout()" class="btn btn-warning">Wyloguj</button>

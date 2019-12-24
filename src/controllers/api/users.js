@@ -9,9 +9,8 @@ router.get('/', function(req, res, next){
 		return res.send(401);
 	}
 	const auth = jwt.decode(req.headers['x-auth'], config.secret)
-	User.getUserValues(['email', 'password'], auth.username, function(err, user){
+	User.getUserValues(['firstname', 'lastname'], auth.email, function(err, user){
 		if(err) { return next(err); }
-		console.log("User: ", user);
 		res.json(user);
 	});
 });
@@ -21,8 +20,11 @@ router.post('/', function(req, res, next){
 		if(err) { return next(err); }
 		
 		User.save({
-			email: req.body.username,
-			password: hash
+				firstname: req.body.firstname,
+				lastname: req.body.lastname,
+				email: req.body.email,
+				telephone: req.body.telephone,
+				password: hash
 		}, (err) => {
 			if(err) { return next(err); }
 			res.send(201);
