@@ -1,13 +1,17 @@
- 
-CREATE TRIGGER emailCheck BEFORE INSERT ON users
+DROP TRIGGER IF EXISTS doesMailExist;
+
+delimiter $$
+CREATE TRIGGER doesMailExist BEFORE INSERT ON users
     FOR EACH ROW
     BEGIN
-        IF NEW.email not in (
+        IF NEW.email in (
             select A.email
-            From Available A  -- CHANGED THE ALIAS TO A
+            From users A 
             where (NEW.email = A.email)
-        ) THEN -- MISSING THEN
+        ) THEN 
            CALL `Insert not allowed`;
 
         END IF;
     END;
+$$
+delimiter ; 
