@@ -5,4 +5,5 @@ angular.module('app')
 	.when('/login', { controller: 'LoginCtrl', templateUrl: 'login.html'})
 	.when('/classes', { controller: 'ClassesCtrl', templateUrl: './classes/classes.html'})
 	.when('/classes/edit', { controller: 'ClassesCtrl', templateUrl: './classes/classesEdit.html'})
+	.when('/myinfo', { controller: '', templateUrl: './users/myinfo.html'})
 });
