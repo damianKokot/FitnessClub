@@ -10,7 +10,7 @@ CREATE TRIGGER doesPhoneExist BEFORE INSERT ON users
             From users A 
             where (NEW.telephone = A.telephone)
         ) THEN 
-           CALL `Insert not allowed`;
+           signal sqlstate '45000' set message_text = 'Phone is used!';
 
         END IF;
     END;

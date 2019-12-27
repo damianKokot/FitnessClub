@@ -9,8 +9,8 @@ CREATE TRIGGER doesMailExist BEFORE INSERT ON users
             From users A 
             where (NEW.email = A.email)
         ) THEN 
-           CALL `Insert not allowed`;
-
+          signal sqlstate '45000' set message_text = 'Mail is used!';
+          
         END IF;
     END;
 $$
