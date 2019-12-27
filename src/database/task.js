@@ -1,29 +1,20 @@
-const db = require('db');
+module.exports.newQuery = () => {
+   this.select = null;
+   this._from = null;
+}
 
-const task = function (task) {
-   this.task = task.task;
-   this.status = task.status;
-   this.created_at = new Date();
+module.exports.select = (...args) => {
+   this._select = args;
 };
 
-task.select(...args => {
-   this._select = args;
-});
-
-task.from(table => {
+module.exports.from = (table) => {
    this._from = table;
-});
+};
 
-task.where(...args => {
-   this._where = args;
-});
+module.exports.where = ()
 
-task.orderBy((arg, direction) => {
-   this._orderBy = arg;
-   this._direction = direction;
-});
 
-task.exec(next => {
+function buildQuery() {
    const query = "SELECT ";
 
    if(this._select) {
@@ -38,19 +29,13 @@ task.exec(next => {
       throw "Database query exception: Table from not selected";
    }
 
-   if (this._where) {
-      query += " WHERE " + this._where.join(" AND ");
-   }
+   return query;
+};
 
-   if(this._orderBy) {
-      query += " ORDER BY " + this._orderBy;
-      if(this._direction) {
-         query += " " + this._direction;
-      }
-   }
-
-   db.query(query, )
-
-
-});
-
+module.exports.exec = (next) => {
+   db.query('SELECT ' + columns + ' FROM users WHERE email = ?;', [email], (err, data) => {
+      if (data)
+         data = data[0];
+      next(err, data);
+   });
+}

@@ -18,14 +18,9 @@ router.get('/', function(req, res, next){
 router.post('/', function(req, res, next){
 	bcrypt.hash(req.body.password, 10, function(err, hash){
 		if(err) { return next(err); }
-		
-		User.save({
-				firstname: req.body.firstname,
-				lastname: req.body.lastname,
-				email: req.body.email,
-				telephone: req.body.telephone,
-				password: hash
-		}, (err) => {
+		req.body.password = hash;
+
+		User.save(req.body, (err) => {
 			if(err) { return next(err); }
 			res.sendStatus(201);
 		})
