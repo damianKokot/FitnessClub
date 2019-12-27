@@ -1,0 +1,12 @@
+<div class="container">
+   <h1>Prowadzone zajęcia</h1>
+   <ul class="list-group">
+      <li ng-repeat="class in classes" class="list-group-item">
+         <strong>@{{ class.name }}</strong>
+         <span>{{ class.description }}</span>
+         <span>{{ class.duration }}</span>
+      </li>
+   </ul>
+
+   <a href="/#/classes/edit"><button class="btn btn-success btn-block">Dodaj nowy</button></a>
+</div>

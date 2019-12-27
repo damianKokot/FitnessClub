@@ -11,7 +11,7 @@ router.post('/', (req, res, next) => {
 		bcrypt.compare(req.body.password, user.password, (err, valid) => {
 			if (err) { return next(err); }
 			if (!valid) { return res.sendStatus(401) }
-			res.send(jwt.encode({ email: req.body.email }, config.secret));
+			res.send(jwt.encode({ email: req.body.email, permissions: "admin" }, config.secret));
 		});
 	});
 });
