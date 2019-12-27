@@ -2,27 +2,27 @@
 	<form ng-submit="register(firstname, lastname, email, telephone, password, repeat_password)">
 		<div class="form-group">
 			<label>Imię</label>
-			<input class="form-control" type="text" ng-model="firstname">
+			<input class="form-control" type="text" ng-model="firstname" required>
 		</div>
 		<div class="form-group">
 			<label>Nazwisko</label>
-			<input class="form-control" type="text" ng-model="lastname">
+			<input class="form-control" type="text" ng-model="lastname" required>
 		</div>
 		<div class="form-group">
 			<label>email</label>
-			<input class="form-control" type="text" ng-model="email">
+			<input class="form-control" type="email" ng-model="email" required>
 		</div>
 		<div class="form-group">
 			<label>Telefon</label>
-			<input class="form-control" type="text" ng-model="telephone">
+			<input class="form-control" type="telephone" ng-model="telephone" required>
 		</div>
 		<div class="form-group">
 			<label>Hasło</label>
-			<input class="form-control" type="password" ng-model="password">
+			<input id="password" class="form-control" type="password" ng-model="password" required>
 		</div>
 		<div class="form-group">
 			<label>Powtórz hasło</label>
-			<input class="form-control" type="password" ng-model="repeat_password">
+			<input id="confirm_password" class="form-control" type="password" ng-model="repeat_password" required>
 		</div>
 		<input class="btn btn-success btn-lg btn-block" type="submit" value="Zarejestruj">
 	</form>

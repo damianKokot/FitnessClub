@@ -6,7 +6,7 @@ const config = require('../../../config');
 
 router.get('/', function(req, res, next){
 	if(!req.headers['x-auth']){
-		return res.send(401);
+		return res.sendStatus(401);
 	}
 	const auth = jwt.decode(req.headers['x-auth'], config.secret)
 	User.getUserValues(['firstname', 'lastname'], auth.email, function(err, user){
@@ -27,7 +27,7 @@ router.post('/', function(req, res, next){
 				password: hash
 		}, (err) => {
 			if(err) { return next(err); }
-			res.send(201);
+			res.sendStatus(201);
 		})
 	})
 });

@@ -1,12 +1,6 @@
 angular.module('app')
 .controller('RegisterCtrl', function($scope, UserSvc){
 	$scope.register = function (firstname, lastname, email, telephone, password, repeat_password){
-		console.log(firstname);
-		console.log(lastname);
-		console.log(email);
-		console.log(telephone);
-		console.log(password);
-		console.log(repeat_password);
 		
 		if(password === repeat_password) {
 			UserSvc.createUser({
