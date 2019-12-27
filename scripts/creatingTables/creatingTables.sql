@@ -17,7 +17,7 @@ CREATE TABLE users (
   firstname VARCHAR(200) NOT NULL,
   lastname VARCHAR(200) NOT NULL,
   telephone VARCHAR(200) NOT NULL,
-  created_at DATE
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP()
 );
 
 DROP TABLE IF EXISTS trainers;
@@ -67,7 +67,10 @@ CREATE TABLE reservations (
   FOREIGN KEY (specific_class_id) REFERENCES specific_classes(id)
 );
 
-
+SOURCE Pulpit/Bazy/projekt/FitnessClub/scripts/users/indexes.sql
+SOURCE Pulpit/Bazy/projekt/FitnessClub/scripts/users/mailCheck.sql
+SOURCE Pulpit/Bazy/projekt/FitnessClub/scripts/users/phoneCheck.sql
+SOURCE Pulpit/Bazy/projekt/FitnessClub/scripts/users/passwordCheck.sql
 
 
 
