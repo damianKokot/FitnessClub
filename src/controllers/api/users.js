@@ -5,11 +5,7 @@ const User = require('../../database/models/user');
 const config = require('../../../config');
 
 router.get('/', function(req, res, next){
-	if(!req.headers['x-auth']){
-		return res.sendStatus(401);
-	}
-	const auth = jwt.decode(req.headers['x-auth'], config.secret)
-	User.getUserValues(['firstname', 'lastname', 'permissions'], auth.email, function(err, user){
+	User.getUserValues(['firstname', 'lastname', 'permissions'], req.auth.email, function(err, user){
 		if(err) { return next(err); }
 		res.json(user);
 	});

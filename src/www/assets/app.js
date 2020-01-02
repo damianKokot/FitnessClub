@@ -10,6 +10,7 @@ angular.module('app')
 	.when('/classes/edit', { controller: 'ClassesCtrl', templateUrl: './classes/classesEdit.html'})
 	.when('/myinfo', { controller: '', templateUrl: './users/myinfo.html'})
 	.when('/classes/showSpecial', { controller: 'SpecialClassesCtrl', templateUrl: './classes/showSpecial.html'})
+	.when('/classes/editSpecial', { controller: 'SpecialClassesCtrl', templateUrl: './classes/editSpecial.html'})
 }]);
 angular.module('app')
 .controller('ApplicationCtrl', ["$scope", "UserSvc", function($scope, UserSvc){
@@ -29,18 +30,38 @@ angular.module('app')
 	.success(function(classes) {
 		$scope.classes = classes;
 	});
-
+	const oldClass = window.class;
+	$scope.class = Object.assign({}, window.class);
+	delete window.class;
+	
 	$scope.showSpecial = function(name) {
-		$scope.className = name;
+		window.className = name;
 		window.location.assign("/#/classes/showSpecial");
+	}
+	
+	$scope.edit = function(Class) {
+		window.class = Class;
+		window.location.assign("/#/classes/edit");
 	}
 
 	$scope.save = function (name, description, duration) {
-		ClassesSvc.create({
-			name, description, duration
-		}).success(() => {
+		if (oldClass) {
+			if(JSON.stringify(oldClass) !== JSON.stringify($scope.class)) {
+				ClassesSvc.update({
+					name, 
+					description, 
+					duration, 
+					oldName: oldClass.name
+				})
+			}
 			window.location.assign("/#/classes");
-		});
+		} else {
+			ClassesSvc.create({
+				name, description, duration
+			}).success(() => {
+				window.location.assign("/#/classes");
+			});
+		}
 	};
 }]);
 
@@ -97,9 +118,14 @@ angular.module('app')
 
 angular.module('app')
 .controller('SpecialClassesCtrl', ["$scope", "SpecialClassesSvc", function ($scope, SpecialClassesSvc) {
-   SpecialClassesSvc.fetch($scope.className)
+   SpecialClassesSvc.fetch(window.className)
    .success(function(classes) {
       $scope.classes = classes;
+   });
+
+   SpecialClassesSvc.getTrainers()
+   .success(function(trainers) {
+      $scope.trainers = trainers;
    });
 
    $scope.save = function (name, description, duration) {
@@ -116,6 +142,11 @@ angular.module('app')
    this.fetch = function () {
       return $http.get('/api/classes');
    }
+
+   this.update = function(updatedClass) {
+      return $http.put('/api/classes', updatedClass);
+   }
+
    this.create = function (newClass) {
       return $http.post('/api/classes', newClass);
    }
@@ -125,6 +156,7 @@ angular.module('app')
    this.fetch = function () {
       return $http.get('/api/mydata');
    }
+
    this.create = function (newClass) {
       return $http.post('/api/mydata', newClass);
    }

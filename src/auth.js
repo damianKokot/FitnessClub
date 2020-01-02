@@ -36,7 +36,9 @@ function allowedSitesForUser(auth) {
 			'/api/classes',
 			'/classes/classesEdit.html',
 			'/classes/showSpecial.html',
-			'/api/showSpecial'
+			'/api/showSpecial',
+			'/classes/editSpecial.html',
+			'/api/trainers'
 		]);
 	} else if(auth.permissions === 'normal'){
 		return allowed.concat([

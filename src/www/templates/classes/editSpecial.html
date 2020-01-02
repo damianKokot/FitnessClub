@@ -1,0 +1,35 @@
+<div class="container">
+   <h1>Dodaj nowe zajęcia</h1>
+   <form ng-submit="save(name, description, start, maxPlaces)">
+      <div class="form-group">
+         <label>Nazwa</label>
+         <input class="form-control" type="text" ng-model="name" required>
+      </div>
+      <div class="form-group">
+         <label>Początek</label>
+         <input class="form-control" type="time" ng-model="start" required>
+      </div>
+      <div class="form-group">
+         <label>Trener</label>
+         <div class="form-control">
+            <div class="select-box__current" tabindex="1">
+               <div ng-repeat="trainer in trainers" class="select-box__value">
+                  <input class="select-box__input" type="radio" id="{{ trainer.id }}" value="{{ trainer.id }}" name="Ben"
+                     checked="checked">
+                  <p class="select-box__input-text">{{ trainer.name }}</p>
+               </div>
+               <img class="select-box__icon" src="http://cdn.onlinewebfonts.com/svg/img_295694.svg" alt="Arrow Icon" aria-hidden="true">
+            </div>
+            <ul class="select-box__list"><li ng-repeat="trainer in trainers">
+                  <label class="select-box__option" for="{{ trainer.id }}" aria-hidden="aria-hidden">{{ trainer.name }}</label>
+            </li></ul>
+         </div>
+      </div>
+      <div class="form-group">
+         <label>Maksymalna ilość miejsc</label>
+         <input class="form-control" type="number" ng-model="maxPlaces" required>
+      </div>
+      
+      <input class="btn btn-success btn-lg btn-block" type="submit" value="Utwórz">
+   </form>
+</div>

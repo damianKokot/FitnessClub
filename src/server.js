@@ -12,6 +12,7 @@ app.use('/api/users', require('./controllers/api/users'));
 app.use('/api/classes', require('./controllers/api/classes'));
 app.use('/api/mydata', require('./controllers/api/mydata'));
 app.use('/api/showSpecial', require('./controllers/api/specialClasses'))
+app.use('/api/trainers', require('./controllers/api/trainers'))
 
 
 
