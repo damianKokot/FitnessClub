@@ -11,7 +11,9 @@ angular.module('app')
 				password
 			}).then(function(response){ 
 					$scope.$emit('login', response.data); 
-				})
+			}).then(function () {
+				window.location.assign('/#/');
+			})
 
 			document.querySelectorAll("input")[5].setCustomValidity("");
 		} else {

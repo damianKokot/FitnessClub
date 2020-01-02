@@ -9,6 +9,7 @@ angular.module('app')
 	.when('/classes', { controller: 'ClassesCtrl', templateUrl: './classes/classes.html'})
 	.when('/classes/edit', { controller: 'ClassesCtrl', templateUrl: './classes/classesEdit.html'})
 	.when('/myinfo', { controller: '', templateUrl: './users/myinfo.html'})
+	.when('/classes/showSpecial', { controller: 'SpecialClassesCtrl', templateUrl: './classes/showSpecial.html'})
 }]);
 angular.module('app')
 .controller('ApplicationCtrl', ["$scope", "UserSvc", function($scope, UserSvc){
@@ -18,11 +19,22 @@ angular.module('app')
 	
 	$scope.logout = function(){
 		$scope.currentUser = null;
-		UserSvc.logout();
+		UserSvc.logout()
+		window.location.assign('/#/');
 	};
 }]);
 angular.module('app')
 .controller('ClassesCtrl', ["$scope", "ClassesSvc", function ($scope, ClassesSvc) {
+	ClassesSvc.fetch()
+	.success(function(classes) {
+		$scope.classes = classes;
+	});
+
+	$scope.showSpecial = function(name) {
+		$scope.className = name;
+		window.location.assign("/#/classes/showSpecial");
+	}
+
 	$scope.save = function (name, description, duration) {
 		ClassesSvc.create({
 			name, description, duration
@@ -30,19 +42,19 @@ angular.module('app')
 			window.location.assign("/#/classes");
 		});
 	};
-	
-	ClassesSvc.fetch().success(function(classes) {
-		$scope.classes = classes;
-	});
 }]);
+
 angular.module('app')
 .controller('LoginCtrl', ["$scope", "UserSvc", function($scope, UserSvc){
 	$scope.login = function(email, password){
 		UserSvc.login(email, password)
-			.then(function(response){ 
-				$scope.$emit('login', response.data); 
-			})
+		.then(function(response){ 
+			$scope.$emit('login', response.data); 
+		}).then(function() {
+			window.location.assign('/#/');
+		});
 	}
+	$scope.login("kokocik1213@gmail.com", "1234");
 }]);
 angular.module('app')
 .controller('MyDataCtrl', ["$scope", "MyDataSvc", function ($scope, MyDataSvc) {
@@ -71,7 +83,9 @@ angular.module('app')
 				password
 			}).then(function(response){ 
 					$scope.$emit('login', response.data); 
-				})
+			}).then(function () {
+				window.location.assign('/#/');
+			})
 
 			document.querySelectorAll("input")[5].setCustomValidity("");
 		} else {
@@ -80,6 +94,22 @@ angular.module('app')
 	}
 }]);
 
+
+angular.module('app')
+.controller('SpecialClassesCtrl', ["$scope", "SpecialClassesSvc", function ($scope, SpecialClassesSvc) {
+   SpecialClassesSvc.fetch($scope.className)
+   .success(function(classes) {
+      $scope.classes = classes;
+   });
+
+   $scope.save = function (name, description, duration) {
+      SpecialClassesSvc.create({
+         name, description, duration
+      }).success(() => {
+         window.location.assign("/#/classes");
+      });
+   };
+}]);
 
 angular.module('app')
 .service('ClassesSvc', ["$http", function ($http) {

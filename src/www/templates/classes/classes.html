@@ -1,12 +1,24 @@
 <div class="container">
    <h1>Prowadzone zajęcia</h1>
-   <ul class="list-group">
-      <li ng-repeat="class in classes" class="list-group-item">
-         <strong>@{{ class.name }}</strong>
-         <span>{{ class.description }}</span>
-         <span>{{ class.duration }}</span>
-      </li>
-   </ul>
+   <table class="table">
+      <thead>
+         <th>Nazwa</th>
+         <th>Opis</th>
+         <th>Czas trwania</th>
+         <th>Akcje</th>
+      </thead>
+      <tbody>
+         <tr ng-repeat="class in classes" scope="row">
+            <td><strong>{{ class.name }}</strong></td>
+            <td>{{ class.description }}</td>
+            <td>{{ class.duration }}</td>
+            <td>
+               <button class="btn btn-success" ng-click="showSpecial(class.name)">Wyświetl</button>
+               <button class="btn btn-success" ng-click="edit(class.name)">Edytuj</button>
+            </td>
+         </tr>
+      </tbody>
+   </table>
 
-   <a href="/#/classes/edit"><button class="btn btn-success btn-block">Dodaj nowy</button></a>
+   <a ng-if='["admin"].includes(currentUser.permissions)' href="/#/classes/edit"><button class="btn btn-success btn-block">Dodaj nowy</button></a>
 </div>

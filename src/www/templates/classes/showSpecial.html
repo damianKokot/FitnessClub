@@ -1,0 +1,29 @@
+<div class="container">
+   <h1>Prowadzone zajęcia</h1>
+   <table class="table">
+      <thead>
+         <th>Nazwa</th>
+         <th>Trener</th>
+         <th>Początek</th>
+         <th>Maksymalna ilość miejsc</th>
+         <th>Wolne miejsca</th>
+         <th>Akcje</th>
+      </thead>
+      <tbody>
+         <tr ng-repeat="class in classes" scope="row">
+            <td>{{ class.className }}</td>
+            <td>{{ class.trainerName }}</td>
+            <td>{{ class.start }}</td>
+            <td>{{ class.max_participants }}</td>
+            <td>{{ class.empty_places }}</td>
+            <td>
+               <a class="btn btn-success" href="/#/classes/showSpecial?name={{class.name}}">Wyświetl</a>
+               <button class="btn btn-success" ng-click="edit(class.name)">Edytuj</button>
+            </td>
+         </tr>
+      </tbody>
+   </table>
+
+   <a ng-if='["admin"].includes(currentUser.permissions)' href="/#/classes/edit"><button
+         class="btn btn-success btn-block">Dodaj nowy</button></a>
+</div>
