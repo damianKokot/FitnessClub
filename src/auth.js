@@ -38,13 +38,18 @@ function allowedSitesForUser(auth) {
 			'/classes/showSpecial.html',
 			'/api/showSpecial',
 			'/classes/editSpecial.html',
-			'/api/trainers'
+			'/api/trainers',
+			'/api/specialClasses',
+			'/api/reservation'
 		]);
 	} else if(auth.permissions === 'normal'){
 		return allowed.concat([
 			'/classes/classes.html',
 			'/api/classes',
 			'/classes/showSpecial.html',
+			'/api/specialClasses',
+			'/api/trainers',
+			'/api/reservation',
 			'/api/showSpecial'
 		]);
 	} else {

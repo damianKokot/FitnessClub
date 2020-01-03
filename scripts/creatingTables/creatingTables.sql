@@ -1,14 +1,9 @@
 DROP DATABASE IF EXISTS FitnessClub;
 
 CREATE DATABASE FitnessClub;
-
 USE FitnessClub;
 
-
-DROP TABLE IF EXISTS users;
-
 CREATE TABLE users (
-
   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY NOT NULL,
   email VARCHAR(200) NOT NULL,
   password VARCHAR(200) NOT NULL,
@@ -20,42 +15,32 @@ CREATE TABLE users (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP()
 );
 
-DROP TABLE IF EXISTS trainers;
-
 CREATE TABLE trainers (
-
   id INT UNSIGNED NOT NULL,
   description VARCHAR(200) NOT NULL,
   
   FOREIGN KEY (id) REFERENCES users(id)
 );
 
-DROP TABLE IF EXISTS classes;
-
 CREATE TABLE classes (
-
   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY NOT NULL,
-  name VARCHAR(200) NOT NULL,
+  name VARCHAR(200) NOT NULL UNIQUE,
   description VARCHAR(200) NOT NULL,
   duration TIME
 );
 
-DROP TABLE IF EXISTS specific_classes;
-
 CREATE TABLE specific_classes (
-
   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY NOT NULL,
   trainer_id INT UNSIGNED NOT NULL,
   class_id INT UNSIGNED NOT NULL,
   start TIMESTAMP NOT NULL,
+  end TIMESTAMP NOT NULL,
   max_participants INT,
-  empty_places INT NOT NULL,
-  
+  reserved_places INT NOT NULL,
+
   FOREIGN KEY (trainer_id) REFERENCES trainers(id),
   FOREIGN KEY (class_id) REFERENCES classes(id)
 );
-
-DROP TABLE IF EXISTS reservations;
 
 CREATE TABLE reservations (
 

@@ -9,4 +9,5 @@ angular.module('app')
 		});
 	}
 	$scope.login("kokocik1213@gmail.com", "1234");
+	//$scope.login("emil@gmail.com", "1234");
 });

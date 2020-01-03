@@ -9,6 +9,13 @@ router.get('/', (req, res, next) => {
 });
 
 router.post('/', (req, res, next) => {
+   Classes.update(req.body, (err) => {
+      if (err) { return next(err); }
+      res.sendStatus(201);
+   })
+});
+
+router.post('/', (req, res, next) => {
    Classes.save(req.body, (err) => {
       if (err) { return next(err); }
       res.sendStatus(201);

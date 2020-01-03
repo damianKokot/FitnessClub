@@ -22,9 +22,7 @@ angular.module('app')
 		if (oldClass) {
 			if(JSON.stringify(oldClass) !== JSON.stringify($scope.class)) {
 				ClassesSvc.update({
-					name, 
-					description, 
-					duration, 
+					name, description, duration, 
 					oldName: oldClass.name
 				})
 			}

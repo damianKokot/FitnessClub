@@ -96,3 +96,38 @@ h1 {
             transform: scaleY(0);
   }
 }
+
+.plus-minus {
+  height: 13px;
+  position: relative;
+  margin-top: 7px;
+  width: 21px;
+}
+.plus-minus:before,
+.plus-minus:after {
+  background: #fff;
+  content: "";
+  height: 5px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 21px;
+  transition: transform 500ms ease;
+}
+.plus-minus:after {
+  transform-origin: center;
+}
+.plus-minus.collapsed:after {
+  transform: rotate(90deg);
+}
+.plus-minus.collapsed:before {
+  transform: rotate(180deg);
+}
+
+td:nth-child(4) {
+  display: flex;
+  justify-content: center;
+}
+td button {
+  margin-left: 10px;
+}

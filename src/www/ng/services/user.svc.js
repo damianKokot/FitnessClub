@@ -17,6 +17,7 @@ angular.module('app')
 	}
 
 	svc.logout = function(){
+		window.auth = {};
 		$http.defaults.headers.common['X-Auth'] = '';
 	};
 	

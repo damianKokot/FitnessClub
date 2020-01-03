@@ -14,7 +14,7 @@
             <td>{{ class.duration }}</td>
             <td>
                <button class="btn btn-success" ng-click="showSpecial(class.name)">Wyświetl</button>
-               <button class="btn btn-success" ng-click="edit(class)">Edytuj</button>
+               <button class="btn btn-success" ng-if='["admin"].includes(currentUser.permissions)' ng-click="edit(class)">Edytuj</button>
             </td>
          </tr>
       </tbody>
