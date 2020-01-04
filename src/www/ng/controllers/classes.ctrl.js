@@ -4,28 +4,29 @@ angular.module('app')
 	.success(function(classes) {
 		$scope.classes = classes;
 	});
-	const oldClass = window.class;
-	$scope.class = Object.assign({}, window.class);
-	delete window.class;
+	$scope.class = staticObj.class;
 	
 	$scope.showSpecial = function(name) {
-		window.className = name;
+		staticObj.className = name;
+		staticObj.classId = $scope.classes.find(item => item.name === name).id;
 		window.location.assign("/#/classes/showSpecial");
 	}
 	
 	$scope.edit = function(Class) {
-		window.class = Class;
+		staticObj.class = Class;
+		staticObj.oldClass = Object.assign({}, Class);
 		window.location.assign("/#/classes/edit");
 	}
 
 	$scope.save = function (name, description, duration) {
-		if (oldClass) {
-			if(JSON.stringify(oldClass) !== JSON.stringify($scope.class)) {
+		if (JSON.stringify(staticObj.oldClass) !== '{}') {
+			if (JSON.stringify(staticObj.oldClass) !== JSON.stringify($scope.class)) {
 				ClassesSvc.update({
 					name, description, duration, 
-					oldName: oldClass.name
+					oldName: staticObj.oldClass.name
 				})
 			}
+			staticObj.oldClass = {};
 			window.location.assign("/#/classes");
 		} else {
 			ClassesSvc.create({

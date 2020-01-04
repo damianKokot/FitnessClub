@@ -2,7 +2,7 @@ const router = require('express').Router();
 const Classes = require('../../database/models/class');
 
 router.get('/', (req, res, next) => {
-   Classes.getClassesValues(['name', 'description', 'duration'], (err, classes) => {
+   Classes.getClassesValues(['id', 'name', 'description', 'duration'], (err, classes) => {
       if (err) { return next(err) }
       res.json(classes)
    });

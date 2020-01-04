@@ -1,27 +1,23 @@
 <div class="container">
-   <h1 ng-if="class.className">Edytuj zajęcia</h1>
-   <h1 ng-if="!class.className">Dodaj nowe zajęcia</h1> 
-   <form ng-submit="save(class.className, class.start, class.trainerName, class.max_participants)">
+   <h1 ng-if="class.$$hashKey">Edytuj zajęcia</h1>
+   <h1 ng-if="!class.$$hashKey">Dodaj nowe zajęcia</h1> 
+   <form ng-submit="save(class.start, class.trainerName, class.max_participants)">
       <div class="form-group">
-         <label>Nazwa</label>
-         <input class="form-control" type="text" ng-model="class.className" required>
+         <label>Trener</label>
+         <select class="form-control" ng-model="class.trainerName">
+            <option ng-repeat="trainer in trainers" value="{{ trainer.name }}"><strong>{{ trainer.name }}</strong>     {{ trainer.description }}</option>
+         </select>
       </div>
       <div class="form-group">
          <label>Początek</label>
          <input class="form-control" type="datetime-local" ng-model="class.start" required>
       </div>
       <div class="form-group">
-         <label>Trener</label>
-         <select class="form-control" ng-model="class.trainerName">
-            <option ng-repeat="trainer in trainers" ng-value="class.trainerName" value="{{ trainer.name }}">{{ trainer.name }}</option>
-         </select>
-      </div>
-      <div class="form-group">
          <label>Maksymalna ilość miejsc</label>
          <input class="form-control" type="number" ng-model="class.max_participants" required>
-      </div>      
+      </div>
 
-      <input ng-if="class.className" class="btn btn-success btn-lg btn-block" type="submit" value="Edytuj">
-      <input ng-if="!class.className" class="btn btn-success btn-lg btn-block" type="submit" value="Utwórz">
+      <input ng-if="class.$$hashKey" class="btn btn-success btn-lg btn-block" type="submit" value="Edytuj">
+      <input ng-if="!class.$$hashKey" class="btn btn-success btn-lg btn-block" type="submit" value="Utwórz">
    </form>
 </div>

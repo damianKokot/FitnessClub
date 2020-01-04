@@ -1,6 +1,9 @@
 let app = angular.module('app', [
 		'ngRoute'
 	]);
+const staticObj = {
+	oldClass: {}
+};
 angular.module('app')
 .config(["$routeProvider", function($routeProvider){
 	$routeProvider
@@ -10,7 +13,7 @@ angular.module('app')
 	.when('/classes/edit', { controller: 'ClassesCtrl', templateUrl: './classes/classesEdit.html'})
 	.when('/myinfo', { controller: '', templateUrl: './users/myinfo.html'})
 	.when('/classes/showSpecial', { controller: 'SpecialClassesCtrl', templateUrl: './classes/showSpecial.html'})
-	.when('/classes/editSpecial', { controller: 'SpecialClassesCtrl', templateUrl: './classes/editSpecial.html'})
+	.when('/classes/editSpecial', { controller: 'SpecialClassesEditCtrl', templateUrl: './classes/editSpecial.html'})
 }]);
 angular.module('app')
 .controller('ApplicationCtrl', ["$scope", "UserSvc", function($scope, UserSvc){
@@ -30,28 +33,29 @@ angular.module('app')
 	.success(function(classes) {
 		$scope.classes = classes;
 	});
-	const oldClass = window.class;
-	$scope.class = Object.assign({}, window.class);
-	delete window.class;
+	$scope.class = staticObj.class;
 	
 	$scope.showSpecial = function(name) {
-		window.className = name;
+		staticObj.className = name;
+		staticObj.classId = $scope.classes.find(item => item.name === name).id;
 		window.location.assign("/#/classes/showSpecial");
 	}
 	
 	$scope.edit = function(Class) {
-		window.class = Class;
+		staticObj.class = Class;
+		staticObj.oldClass = Object.assign({}, Class);
 		window.location.assign("/#/classes/edit");
 	}
 
 	$scope.save = function (name, description, duration) {
-		if (oldClass) {
-			if(JSON.stringify(oldClass) !== JSON.stringify($scope.class)) {
+		if (JSON.stringify(staticObj.oldClass) !== '{}') {
+			if (JSON.stringify(staticObj.oldClass) !== JSON.stringify($scope.class)) {
 				ClassesSvc.update({
 					name, description, duration, 
-					oldName: oldClass.name
+					oldName: staticObj.oldClass.name
 				})
 			}
+			staticObj.oldClass = {};
 			window.location.assign("/#/classes");
 		} else {
 			ClassesSvc.create({
@@ -73,7 +77,7 @@ angular.module('app')
 			window.location.assign('/#/');
 		});
 	}
-	$scope.login("kokocik1213@gmail.com", "1234");
+	//$scope.login("kokocik1213@gmail.com", "1234");
 	//$scope.login("emil@gmail.com", "1234");
 }]);
 angular.module('app')
@@ -114,37 +118,19 @@ angular.module('app')
 	}
 }]);
 
-
 angular.module('app')
 .controller('SpecialClassesCtrl', ["$scope", "SpecialClassesSvc", function ($scope, SpecialClassesSvc) {
-   SpecialClassesSvc.fetch(window.className)
+   SpecialClassesSvc.fetch(staticObj.className)
    .success(function(classes) {
-      classes = classes[0];
-      console.log(classes[0])
-
-      SpecialClassesSvc.getReservations()
-      .success(function(reservated) {
-
-         $scope.classes = classes.map((item) => {
-            if(reservated.find(elem => item.id === elem.specific_class_id) === -1) {
-               item.reserved = true;
-            }
-            item.start = item.start.slice(0, 16);
-            return item;
-         }).sort(item => item.reserved);
-      })
+      $scope.classes = classes.map(item => {
+         item.start = item.start.slice(0, 16);
+         return item; 
+      }).sort(item => item.reserved);
    });
-   const oldClass = Object.assign({}, window.class);
-   $scope.class = window.class;
-   delete window.class;
-
-   SpecialClassesSvc.getTrainers()
-   .success(function(trainers) {
-      $scope.trainers = trainers;
-   });
-
+   
    $scope.edit = function(Class) {
-      window.class = Class;
+      staticObj.class = Class;
+      staticObj.oldClass = Object.assign({}, Class);
       window.location.assign('/#/classes/editSpecial');
    }
 
@@ -154,6 +140,7 @@ angular.module('app')
       
       SpecialClassesSvc.reservate(action, (button.title * 1))
       .success(function(status) {
+         console.log(status)
          if(status[0][0].OK) {
             button.classList.toggle("collapsed");
          } else {
@@ -161,27 +148,39 @@ angular.module('app')
          }
       })
    }
+}]);
 
-   $scope.save = function (className, start, trainerName, max_participants) {
-      console.log(start + ":10.000Z")
-      
-      const trainerId = $scope.trainers.find((item) => item.name === trainerName).id;
-      if (oldClass) {
-         if (JSON.stringify(oldClass) !== JSON.stringify($scope.class)) {
+angular.module('app')
+.controller('SpecialClassesEditCtrl', ["$scope", "SpecialClassesSvc", function ($scope, SpecialClassesSvc) {
+   SpecialClassesSvc.getTrainers()
+   .success(function(trainers) {
+      $scope.trainers = trainers;
+   });
+   $scope.class = staticObj.class;
+
+   $scope.save = function (start, trainerName, max_participants) {      
+      if (JSON.stringify(staticObj.oldClass) !== '{}') {
+         if (JSON.stringify(staticObj.oldClass) !== JSON.stringify($scope.class)) {
             SpecialClassesSvc.update({
-               className, 
-               start: start + ":00.000Z", 
-               trainerId, 
+               trainerId: $scope.trainers.find((item) => item.name === trainerName).id, 
+               className: staticObj.className,
+               start: (start + ":00").replace("T", " "), 
                max_participants,
-               oldName: oldClass.className
+               id: staticObj.oldClass.id
             })
          }
+         staticObj.oldClass = {};
          window.location.assign("/#/classes/showSpecial");
       } else {
          SpecialClassesSvc.create({
-            className, start: start + ":00.000Z", trainerId, max_participants
+            trainerId: $scope.trainers.find((item) => item.name === trainerName).id, 
+            classId: staticObj.classId,
+            start: (start + ":00").replace("T", " "), 
+            max_participants
          }).success(() => {
             window.location.assign("/#/classes/showSpecial");
+         }).catch((reason)=>{
+            console.log("REASON: ", reason)
          });
       }
    };

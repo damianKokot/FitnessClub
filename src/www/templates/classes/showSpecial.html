@@ -2,7 +2,6 @@
    <h1>Prowadzone zajęcia</h1>
    <table class="table">
       <thead>
-         <th>Nazwa</th>
          <th>Trener</th>
          <th>Początek</th>
          <th>Maksymalna ilość miejsc</th>
@@ -11,9 +10,7 @@
       </thead>
       <tbody>
          <tr ng-repeat="class in classes" scope="row">
-            <td><span data-toggle="tooltip" data-placement="bottom" title="{{ class.classDescription }}">
-               {{ class.className }}</span></td>
-            <td><span data-toggle="tooltip" data-placement="bottom" title="{{ class.trainerDescription }}"></span>
+            <td><span data-toggle="tooltip" data-placement="bottom" title="{{ class.trainerDescription }}">
                {{ class.trainerName }}</span></td>
             <td>{{ class.start }}</td>
             <td>{{ class.max_participants }}</td>
@@ -21,7 +18,7 @@
             <td>
                <button class="btn btn-success" ng-if='["admin"].includes(currentUser.permissions)' ng-click="edit(class)">Edytuj</button>
                <div class="btn btn-success assignMe" onclick="window.myButton=this" ng-click="reservation()">
-                  <div class="plus-minus" ng-class="{collapsed: class.reserved}" title="{{ class.id }}"></div>
+                  <div class="plus-minus" ng-class="{collapsed: !class.reserved}" title="{{ class.id }}"></div>
                </div>
             </td>
          </tr>
