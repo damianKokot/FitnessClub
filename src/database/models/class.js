@@ -7,6 +7,10 @@ module.exports.getClassesValues = (args, next) => {
    });
 };
 
+module.exports.update = (data, next) => {
+   db.query('UPDATE classes SET name=?, description=?, duration=? WHERE name=?', Object.values(data), next);
+}
+
 module.exports.save = (data, next) => {
    db.query('INSERT INTO classes(name, description, duration) VALUES(?, ?, ?)', Object.values(data), next);
 };

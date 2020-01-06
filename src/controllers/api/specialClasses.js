@@ -1,8 +1,8 @@
 const router = require('express').Router();
-const Classes = require('../../database/models/class');
+const Classes = require('../../database/models/specialClasses');
 
 router.get('/', (req, res, next) => {
-   Classes.getClassesValues(['id', 'name', 'description', 'duration'], (err, classes) => {
+   Classes.getSpecificClass(req.auth.id, req.headers.name, (err, classes) => {
       if (err) { return next(err) }
       res.json(classes)
    });

@@ -1,21 +1,26 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 	<link rel="stylesheet" href="/styles.css">
 </head>
+
 <body ng-app="app" ng-controller="ApplicationCtrl">
 	<nav class="navbar navbar-default">
 		<div class="container">
 			<ul class="nav navbar-nav">
-			    <li><a href="/#/myinfo">Moje dane</a></li>
-				<li><a href="/#/classes">Rodzaje zajęć</a></li>
-				<li><a href="/#/register">Rejestracja</a></li>
-				<li><a href="/#/login">Logowanie</a></li>
+				<li><a href="/#/">Home</a></li>
+				<li ng-if='["normal", "admin"].includes(currentUser.permissions)'>
+					<a href="/#/classes">Rodzaje zajęć</a>
+				</li>
+				<li><a href="/#/myinfo">Moje dane</a></li>
+				<li ng-if='!currentUser'><a href="/#/register">Rejestracja</a></li>
+				<li ng-if='!currentUser'><a href="/#/login">Logowanie</a></li>
 			</ul>
-			<p ng-if='currentUser' class="navbar-text navbar-right">
+			<div ng-if='currentUser' class="navbar-text navbar-right">
 				Zalogowany jako: {{currentUser.firstname}} {{currentUser.lastname}}
-			</p>
+			</div>
 			<div ng-if='currentUser' class="navbar-btn navbar-right">
 				<button ng-click="logout()" class="btn btn-warning">Wyloguj</button>
 			</div>
@@ -28,4 +33,4 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.18/angular-route.js"></script>
 	<script src="/app.js"></script>
 </body>
-</html> 
+</html>

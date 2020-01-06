@@ -1,6 +1,9 @@
 let app = angular.module('app', [
 		'ngRoute'
 	]);
+const staticObj = {
+	oldClass: {}
+};
 angular.module('app')
 .config(["$routeProvider", function($routeProvider){
 	$routeProvider
@@ -9,6 +12,8 @@ angular.module('app')
 	.when('/classes', { controller: 'ClassesCtrl', templateUrl: './classes/classes.html'})
 	.when('/classes/edit', { controller: 'ClassesCtrl', templateUrl: './classes/classesEdit.html'})
 	.when('/myinfo', { controller: '', templateUrl: './users/myinfo.html'})
+	.when('/classes/showSpecial', { controller: 'SpecialClassesCtrl', templateUrl: './classes/showSpecial.html'})
+	.when('/classes/editSpecial', { controller: 'SpecialClassesEditCtrl', templateUrl: './classes/editSpecial.html'})
 }]);
 angular.module('app')
 .controller('ApplicationCtrl', ["$scope", "UserSvc", function($scope, UserSvc){
@@ -18,31 +23,62 @@ angular.module('app')
 	
 	$scope.logout = function(){
 		$scope.currentUser = null;
-		UserSvc.logout();
+		UserSvc.logout()
+		window.location.assign('/#/');
 	};
 }]);
 angular.module('app')
 .controller('ClassesCtrl', ["$scope", "ClassesSvc", function ($scope, ClassesSvc) {
-	$scope.save = function (name, description, duration) {
-		ClassesSvc.create({
-			name, description, duration
-		}).success(() => {
-			window.location.assign("/#/classes");
-		});
-	};
-	
-	ClassesSvc.fetch().success(function(classes) {
+	ClassesSvc.fetch()
+	.success(function(classes) {
 		$scope.classes = classes;
 	});
+	$scope.class = staticObj.class;
+	
+	$scope.showSpecial = function(name) {
+		staticObj.className = name;
+		staticObj.classId = $scope.classes.find(item => item.name === name).id;
+		window.location.assign("/#/classes/showSpecial");
+	}
+	
+	$scope.edit = function(Class) {
+		staticObj.class = Class;
+		staticObj.oldClass = Object.assign({}, Class);
+		window.location.assign("/#/classes/edit");
+	}
+
+	$scope.save = function (name, description, duration) {
+		if (JSON.stringify(staticObj.oldClass) !== '{}') {
+			if (JSON.stringify(staticObj.oldClass) !== JSON.stringify($scope.class)) {
+				ClassesSvc.update({
+					name, description, duration, 
+					oldName: staticObj.oldClass.name
+				})
+			}
+			staticObj.oldClass = {};
+			window.location.assign("/#/classes");
+		} else {
+			ClassesSvc.create({
+				name, description, duration
+			}).success(() => {
+				window.location.assign("/#/classes");
+			});
+		}
+	};
 }]);
+
 angular.module('app')
 .controller('LoginCtrl', ["$scope", "UserSvc", function($scope, UserSvc){
 	$scope.login = function(email, password){
 		UserSvc.login(email, password)
-			.then(function(response){ 
-				$scope.$emit('login', response.data); 
-			})
+		.then(function(response){ 
+			$scope.$emit('login', response.data); 
+		}).then(function() {
+			window.location.assign('/#/');
+		});
 	}
+	//$scope.login("kokocik1213@gmail.com", "1234");
+	//$scope.login("emil@gmail.com", "1234");
 }]);
 angular.module('app')
 .controller('MyDataCtrl', ["$scope", "MyDataSvc", function ($scope, MyDataSvc) {
@@ -71,7 +107,9 @@ angular.module('app')
 				password
 			}).then(function(response){ 
 					$scope.$emit('login', response.data); 
-				})
+			}).then(function () {
+				window.location.assign('/#/');
+			})
 
 			document.querySelectorAll("input")[5].setCustomValidity("");
 		} else {
@@ -80,12 +118,84 @@ angular.module('app')
 	}
 }]);
 
+angular.module('app')
+.controller('SpecialClassesCtrl', ["$scope", "SpecialClassesSvc", function ($scope, SpecialClassesSvc) {
+   SpecialClassesSvc.fetch(staticObj.className)
+   .success(function(classes) {
+      $scope.classes = classes.map(item => {
+         item.start = item.start.slice(0, 16);
+         return item; 
+      }).sort(item => item.reserved);
+   });
+   
+   $scope.edit = function(Class) {
+      staticObj.class = Class;
+      staticObj.oldClass = Object.assign({}, Class);
+      window.location.assign('/#/classes/editSpecial');
+   }
+
+   $scope.reservation = function() {
+      const button = window.myButton.children[0];
+      const action = (button.classList.contains("collapsed"))? "assign" : "unAssign"; 
+      
+      SpecialClassesSvc.reservate(action, (button.title * 1))
+      .success(function(status) {
+         console.log(status)
+         if(status[0][0].OK) {
+            button.classList.toggle("collapsed");
+         } else {
+            alert("Jesteś już zapisany w tym czasie do zajęć")
+         }
+      })
+   }
+}]);
+
+angular.module('app')
+.controller('SpecialClassesEditCtrl', ["$scope", "SpecialClassesSvc", function ($scope, SpecialClassesSvc) {
+   SpecialClassesSvc.getTrainers()
+   .success(function(trainers) {
+      $scope.trainers = trainers;
+   });
+   $scope.class = staticObj.class;
+
+   $scope.save = function (start, trainerName, max_participants) {      
+      if (JSON.stringify(staticObj.oldClass) !== '{}') {
+         if (JSON.stringify(staticObj.oldClass) !== JSON.stringify($scope.class)) {
+            SpecialClassesSvc.update({
+               trainerId: $scope.trainers.find((item) => item.name === trainerName).id, 
+               className: staticObj.className,
+               start: (start + ":00").replace("T", " "), 
+               max_participants,
+               id: staticObj.oldClass.id
+            })
+         }
+         staticObj.oldClass = {};
+         window.location.assign("/#/classes/showSpecial");
+      } else {
+         SpecialClassesSvc.create({
+            trainerId: $scope.trainers.find((item) => item.name === trainerName).id, 
+            classId: staticObj.classId,
+            start: (start + ":00").replace("T", " "), 
+            max_participants
+         }).success(() => {
+            window.location.assign("/#/classes/showSpecial");
+         }).catch((reason)=>{
+            console.log("REASON: ", reason)
+         });
+      }
+   };
+}]);
 
 angular.module('app')
 .service('ClassesSvc', ["$http", function ($http) {
    this.fetch = function () {
       return $http.get('/api/classes');
    }
+
+   this.update = function(updatedClass) {
+      return $http.put('/api/classes', updatedClass);
+   }
+
    this.create = function (newClass) {
       return $http.post('/api/classes', newClass);
    }
@@ -95,6 +205,11 @@ angular.module('app')
    this.fetch = function () {
       return $http.get('/api/mydata');
    }
+
+   this.update = function(Class) {
+      return $http.put('/api/specialClasses', Class)
+   }
+
    this.create = function (newClass) {
       return $http.post('/api/mydata', newClass);
    }
@@ -118,6 +233,7 @@ angular.module('app')
 	}
 
 	svc.logout = function(){
+		window.auth = {};
 		$http.defaults.headers.common['X-Auth'] = '';
 	};
 	

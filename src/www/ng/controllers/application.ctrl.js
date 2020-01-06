@@ -6,6 +6,7 @@ angular.module('app')
 	
 	$scope.logout = function(){
 		$scope.currentUser = null;
-		UserSvc.logout();
+		UserSvc.logout()
+		window.location.assign('/#/');
 	};
 });

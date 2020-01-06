@@ -6,4 +6,6 @@ angular.module('app')
 	.when('/classes', { controller: 'ClassesCtrl', templateUrl: './classes/classes.html'})
 	.when('/classes/edit', { controller: 'ClassesCtrl', templateUrl: './classes/classesEdit.html'})
 	.when('/myinfo', { controller: '', templateUrl: './users/myinfo.html'})
+	.when('/classes/showSpecial', { controller: 'SpecialClassesCtrl', templateUrl: './classes/showSpecial.html'})
+	.when('/classes/editSpecial', { controller: 'SpecialClassesEditCtrl', templateUrl: './classes/editSpecial.html'})
 });

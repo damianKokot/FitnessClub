@@ -1,18 +1,21 @@
 <div class="container">
-   <h1>Utwórz nowy rodzaj zajęć</h1>
-   <form ng-submit="save(name, description, duration)">
+   <h1 ng-if="class.$$hashKey">Edytuj informacje o zajęciach</h1>
+   <h1 ng-if="!class.$$hashKey">Utwórz nowy rodzaj zajęć</h1>
+   <form ng-submit="save(class.name, class.description, class.duration)">
       <div class="form-group">
          <label>Nazwa</label>
-         <input class="form-control" type="text" ng-model="name" required>
+         <input class="form-control" type="text" ng-model="class.name" ng-value="value1" required>
       </div>
       <div class="form-group">
          <label>Opis</label>
-         <input class="form-control" type="text" ng-model="description" required>
+         <input class="form-control" type="text" ng-model="class.description" required>
       </div>
       <div class="form-group">
          <label>Jak długo</label>
-         <input class="form-control" type="time" ng-model="duration" required>
+         <input class="form-control" type="time" ng-model="class.duration" required>
       </div>
-      <input class="btn btn-success btn-lg btn-block" type="submit" value="Utwórz">
+
+      <input ng-if="class.$$hashKey" class="btn btn-success btn-lg btn-block" type="submit" value="Edytuj">
+      <input ng-if="!class.$$hashKey" class="btn btn-success btn-lg btn-block" type="submit" value="Utwórz">
    </form>
 </div>
