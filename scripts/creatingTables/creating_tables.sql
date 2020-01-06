@@ -56,7 +56,3 @@ SOURCE Pulpit/Bazy/projekt/FitnessClub/scripts/users/indexes.sql
 SOURCE Pulpit/Bazy/projekt/FitnessClub/scripts/users/mailCheck.sql
 SOURCE Pulpit/Bazy/projekt/FitnessClub/scripts/users/phoneCheck.sql
 SOURCE Pulpit/Bazy/projekt/FitnessClub/scripts/users/passwordCheck.sql
-
-
-
-
