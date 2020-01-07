@@ -12,3 +12,7 @@ module.exports.getUserValues = (args, email, next) => {
 module.exports.save = (data, next) => {
 	db.query('INSERT INTO users(firstname, lastname, email, telephone, password) VALUES(?, ?, ?, ?, ?)', Object.values(data), next);
 };
+
+module.exports.update = (data, next) => {
+	db.query('UPDATE users SET firstname=?, lastname=?, email=?, telephone=? WHERE email=?', Object.values(data), next);
+ }

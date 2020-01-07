@@ -14,8 +14,7 @@ app.use('/api/classes', require('./controllers/api/classes'))
 app.use('/api/specialClasses', require('./controllers/api/specialClasses'))
 app.use('/api/trainers', require('./controllers/api/trainers'))
 app.use('/api/reservation', require('./controllers/api/reservations'))
-
-
+app.use('/api/mydata', require('./controllers/api/mydata'))
 
 app.listen(8080, function () {
 	console.log('Server is listening on: ', 8080);

@@ -40,7 +40,11 @@ function allowedSitesForUser(auth) {
 			'/classes/editSpecial.html',
 			'/api/trainers',
 			'/api/specialClasses',
-			'/api/reservation'
+			'/api/reservation',
+			'/api/mydata',
+			'/users/myinfo.html',
+			'/users/editdata.html',
+			'/api/editdata'
 		]);
 	} else if(auth.permissions === 'normal'){
 		return allowed.concat([
@@ -50,7 +54,11 @@ function allowedSitesForUser(auth) {
 			'/api/specialClasses',
 			'/api/trainers',
 			'/api/reservation',
-			'/api/showSpecial'
+			'/api/showSpecial',
+			'/api/mydata',
+			'/users/myinfo.html',
+			'/users/editdata.html',
+			'/api/editdata'
 		]);
 	} else {
 		return allowed;
