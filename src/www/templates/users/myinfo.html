@@ -1,8 +1,20 @@
-<div class="container">
+<div data="container">
    <h1>Moje informacje</h1>
 
-    <span>{{ data.lastname }}</span>
-    <span>{{ class.email }}</span>
-    <span>{{ class.telephone }}</span>
+    <ng-repeat="user in users" scope="row">
+    <label>Imię: </label>
+    <span>{{ data.firstname }}</span> <br />
+    <label>Nazwisko: </label>
+    <span>{{ data.lastname }}</span>  <br />
+    <label>Adres mailowy:</label>
+    <span>{{ data.email }}</span>    <br />
+    <label>Nr. telefonu:</label>
+    <span>{{ data.telephone }}</span>  <br />
+
+
+   <li ng-if='["normal", "admin"].includes(currentUser.permissions)'>
+			<a href="/#/editdata">Edytuj dane</a>
+	</li>
+
 
 </div>

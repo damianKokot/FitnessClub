@@ -5,5 +5,7 @@ angular.module('app')
 	.when('/login', { controller: 'LoginCtrl', templateUrl: 'login.html'})
 	.when('/classes', { controller: 'ClassesCtrl', templateUrl: './classes/classes.html'})
 	.when('/classes/edit', { controller: 'ClassesCtrl', templateUrl: './classes/classesEdit.html'})
-	.when('/myinfo', { controller: '', templateUrl: './users/myinfo.html'})
+	.when('/classes/showSpecial', { controller: 'SpecialClassesCtrl', templateUrl: './classes/showSpecial.html'})
+	.when('/myinfo', { controller: 'MyDataCtrl', templateUrl: './users/myinfo.html'})
+	.when('/editdata', { controller: 'EditDataCtrl', templateUrl: './users/editdata.html'})
 });

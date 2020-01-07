@@ -2,14 +2,24 @@ const User = require('../../database/models/user');
 const router = require('express').Router();
 
 router.get('/', function(req, res, next){
-	if(!req.headers['x-auth']){
+	if(req.auth==null || req.auth.email==null){
 		return res.sendStatus(401);
 	}
-	const auth = router.decode(req.headers['x-auth'], config.secret)
-	User.getUserValues(['firstname', 'lastname', 'email', 'telephone'], auth.email, function(err, user){
+	
+	User.getUserValues(['firstname', 'lastname', 'email', 'telephone'], req.auth.email, function(err, user){
 		if(err) { return next(err); }
 		res.json(user);
 	});
 });
+
+router.put('/', (req, res, next) => {
+	
+	req.body.oldemail=req.auth.email;
+
+	User.update(req.body, (err) => {
+	   if (err) { return next(err); }
+	   res.sendStatus(201);
+	})
+ });
 
 module.exports = router;

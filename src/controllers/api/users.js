@@ -9,7 +9,7 @@ router.get('/', function(req, res, next){
 		return res.sendStatus(401);
 	}
 	const auth = jwt.decode(req.headers['x-auth'], config.secret)
-	User.getUserValues(['firstname', 'lastname'], auth.email, function(err, user){
+	User.getUserValues(['firstname', 'lastname', 'permissions'], auth.email, function(err, user){
 		if(err) { return next(err); }
 		res.json(user);
 	});

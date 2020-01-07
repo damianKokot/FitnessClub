@@ -1,14 +1,15 @@
 angular.module('app')
-.controller('MyDataCtrl', function ($scope, MyDataSvc) {
+.controller('EditDataCtrl', function ($scope, EditDataSvc) {
 	$scope.save = function (firstname, lastname, email, telephone) {
-		MyDataSvc.create({
+		EditDataSvc.update({
 			firstname, lastname, email, telephone
 		}).success(() => {
 			window.location.assign("/#/mydata");
 		});
-	};
-	
-	MyDataSvc.fetch().success(function(data) {
-		$scope.data = data;
+    };
+    
+    EditDataSvc.fetch().success(function(data) {
+        $scope.data = data;
+        console.log(data);
 	});
 });

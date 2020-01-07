@@ -1,0 +1,22 @@
+<div class="container">
+   <h1>Edytuj dane</h1>
+   <form ng-submit="save(data.firstname, data.lastname, data.email, data.telephone)">
+      <div class="form-group">
+         <label>Imię:</label>
+         <input class="form-control" type="text" ng-model="data.firstname" required>
+      </div>
+      <div class="form-group">
+         <label>Nazwisko:</label>
+         <input class="form-control" type="text" ng-model="data.lastname" required>
+      </div>
+      <div class="form-group">
+         <label>Mail:</label>
+         <input class="form-control" type="text" ng-model="data.email" required>
+      </div>
+      <div class="form-group">
+         <label>Telefon:</label>
+         <input class="form-control" type="text" ng-model="data.telephone" required>
+      </div>
+      <input class="btn btn-success btn-lg btn-block" type="submit" value="Zmień">
+   </form>
+</div>
