@@ -1,9 +1,4 @@
 DELIMITER $$
-DROP TRIGGER IF EXISTS insertClass$$
-DROP TRIGGER IF EXISTS updateClass$$
-DROP TRIGGER IF EXISTS insertToReservations$$
-DROP TRIGGER IF EXISTS isAllowedToReserve$$
-
 /*===================================================
       Trigger to calculate end hour and check 
       availability of trainer to run this course 

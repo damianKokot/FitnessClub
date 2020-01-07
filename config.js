@@ -1,3 +1,4 @@
 module.exports = {
-	secret: 'supersecretkey'
+	secret: 'supersecretkey',
+	db_password: '12345'
 }
