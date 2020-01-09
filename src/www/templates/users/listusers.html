@@ -1,0 +1,25 @@
+<div class="container">
+   <h1>Użytkownicy w bazie</h1>
+   <table class="table">
+      <thead>
+         <th>Imie</th>
+         <th>Nazwisko</th>
+         <th>Email</th>
+         <th>Telefon</th>
+         <th>Stworzone<th/>
+      </thead>
+      <tbody>
+         <tr ng-repeat="user in data" scope="row">
+            <td>{{ user.firstname }}</td>
+            <td>{{ user.lastname }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.telephone }}</td>
+            <td>{{ user.created_at }}</td>
+            <td>
+               <button class="btn btn-success" ng-click="showSpecial(class.name)">Usuń</button>
+               <button class="btn btn-success" ng-if='["admin"].includes(currentUser.permissions)' ng-click="edit(user.email)">Edytuj</button>
+            </td>
+         </tr>
+      </tbody>
+   </table>
+</div>

@@ -126,7 +126,25 @@ angular.module('app')
 	});
 }]);
 angular.module('app')
+<<<<<<< HEAD
 >>>>>>> Initial commit
+=======
+.controller('ListUsersCtrl', ["$scope", "ListUsersSvc", function ($scope, ListUsersSvc) {
+    $scope.delete = function (email) {
+	
+    };
+
+    $scope.edit = function (firstname, lastname, email, telephone) {
+		
+    };
+    
+    ListUsersSvc.fetch().success(function(data) {
+        $scope.data = data;
+        console.log(data);
+	});
+}]);
+angular.module('app')
+>>>>>>> Improved user listnig
 .controller('LoginCtrl', ["$scope", "UserSvc", function($scope, UserSvc){
 	$scope.login = function(email, password){
 		UserSvc.login(email, password)
@@ -268,6 +286,12 @@ angular.module('app')
          $http.defaults.headers.common['X-Auth'] = res.data;
          return svc.getUser();
       })
+   }
+}]);
+angular.module('app')
+.service('ListUsersSvc', ["$http", function ($http) {
+   this.fetch = function () {
+      return $http.get('/api/listusers');
    }
 }]);
 angular.module('app')
