@@ -10,4 +10,5 @@ angular.module('app')
 	.when('/classes/editSpecial', { controller: 'SpecialClassesEditCtrl', templateUrl: './classes/editSpecial.html'})
 	.when('/myinfo', { controller: 'MyDataCtrl', templateUrl: './users/myinfo.html'})
 	.when('/editdata', { controller: 'EditDataCtrl', templateUrl: './users/editdata.html'})
+	.when('/listusers', { controller: 'ListUsersCtrl', templateUrl: './users/listusers.html'})
 });

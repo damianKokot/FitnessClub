@@ -13,6 +13,13 @@ module.exports.save = (data, next) => {
 	db.query('INSERT INTO users(firstname, lastname, email, telephone, password) VALUES(?, ?, ?, ?, ?)', Object.values(data), next);
 };
 
+
+module.exports.listUsers = (next) => {
+	db.query('SELECT firstname, lastname, email, telephone, created_at FROM users;', (err, data) => {
+		next(err, data);
+	});
+};
+
 module.exports.update = (data, next) => {
 	db.query('UPDATE users SET firstname=?, lastname=?, email=?, telephone=? WHERE email=?', Object.values(data), next);
- }
+}

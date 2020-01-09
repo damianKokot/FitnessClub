@@ -45,7 +45,9 @@ function allowedSitesForUser(auth) {
 			'/api/mydata',
 			'/users/myinfo.html',
 			'/users/editdata.html',
-			'/api/editdata'
+			'/api/editdata',
+			'/users/listusers.html',
+			'/api/listusers'
 		]);
 	} else if(auth.permissions === 'normal'){
 		return allowed.concat([
