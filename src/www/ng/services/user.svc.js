@@ -1,6 +1,6 @@
 angular.module('app')
 .service('UserSvc', function($http){
-	let svc = this;
+	const svc = this;
 	
 	svc.getUser = function(){
 		return $http.get('/api/users')

@@ -1,8 +1,6 @@
 const router = require('express').Router();
 const bcrypt = require('bcrypt');
-const jwt = require('jwt-simple');
 const User = require('../../database/models/user');
-const config = require('../../../config');
 
 router.get('/', function(req, res, next){
 	User.getUserValues(['firstname', 'lastname', 'permissions'], req.auth.email, function(err, user){

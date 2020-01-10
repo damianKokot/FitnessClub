@@ -8,6 +8,5 @@ angular.module('app')
 			window.location.assign('/#/');
 		});
 	}
-	//$scope.login("kokocik1213@gmail.com", "1234");
-	//$scope.login("emil@gmail.com", "1234");
+	$scope.login("admin@admin.com", "1234");
 });

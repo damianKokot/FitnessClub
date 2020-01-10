@@ -1,20 +1,17 @@
-<div data="container">
-   <h1>Moje informacje</h1>
-
-    <ng-repeat="user in users" scope="row">
-    <label>Imię: </label>
-    <span>{{ data.firstname }}</span> <br />
-    <label>Nazwisko: </label>
-    <span>{{ data.lastname }}</span>  <br />
-    <label>Adres mailowy:</label>
-    <span>{{ data.email }}</span>    <br />
-    <label>Nr. telefonu:</label>
-    <span>{{ data.telephone }}</span>  <br />
-
-
-   <li ng-if='["normal", "admin"].includes(currentUser.permissions)'>
-			<a href="/#/editdata">Edytuj dane</a>
-	</li>
-
-
+<div class="container">
+   <div class="jumbotron">
+      <div class="row">
+         <div class="col-md-12">
+            <h1 class="big s1">{{ data.firstname }} {{ data.lastname }}</h1>
+         </div>
+   
+         <p><i class="icon_phone mr20 id-color"></i>{{ data.telephone }}</p>
+   
+         <p><i class="icon_mail mr20 id-color"></i>{{ data.email }}</p>
+         
+         <a href="/#/editdata">
+            <button class="btn btn-success" ng-if='["normal", "admin"].includes(currentUser.permissions)'>Edytuj dane</button>
+         </a>
+      </div>
+   </div>
 </div>
