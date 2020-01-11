@@ -9,5 +9,4 @@ angular.module('app')
 			window.location.assign('/#/');
 		});
 	}
-	//$scope.login("admin@admin.com", "1234");
 });
