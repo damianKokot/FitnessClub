@@ -26,7 +26,8 @@ function allowedSitesForUser(auth) {
 		'/login.html',
 		'/register.html',
 		'/api/users',
-		'/api/sessions'
+		'/api/sessions',
+		'/home.html'
 	];
 	if(auth === undefined) {
 		return allowed;

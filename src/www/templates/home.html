@@ -1,0 +1,56 @@
+
+<style>
+   * {
+      box-sizing: border-box
+   }
+
+   /* Slideshow container */
+   .slideshow-container {
+      max-width: 1000px;
+      height: 1000px;
+      position: relative;
+      margin: auto;
+      display: inline-block;
+      vertical-align: middle;
+   }
+   .hidden {
+      display: none;
+   }
+
+   /* Hide the images by default */
+   .mySlide {
+      width: 100%;
+      height: 100%;
+   }
+
+   /* Fading animation */
+   .myFade {
+      opacity: 1;
+      -webkit-animation-name: myFade;
+      -webkit-animation-duration: 1.5s;
+      animation-name: myFade;
+      animation-duration: 1.5s;
+   }
+
+   @keyframes myFade {
+      from {
+         opacity: .4
+      }
+
+      to {
+         opacity: 1
+      }
+   }
+</style>
+
+<div class="container">
+   <!-- Slideshow container -->
+   <div class="slideshow-container">
+   
+      <!-- Full-width images with number and caption text -->
+      <div class="mySlide myFade"><img src="https://st3.depositphotos.com/4455875/13612/v/1600/depositphotos_136120840-stock-illustration-fitness-club-logo-design-template.jpg" style="width:100%; height: 70%"></div>
+      <div class="mySlide myFade hidden"><img src="https://u.profitroom.pl/2019-hotelatut-pl/thumb/1920x810/uploads/Silownia_fitness/22.10.jpg" style="width:100%; height: 70%"></div>
+      <div class="mySlide myFade hidden"><img src="https://img.franchising.pl/pl/9d5/c13/energie-fitness-silownia-2.jpg" style="width:100%; height: 70%"></div>
+   
+   </div>
+</div>
