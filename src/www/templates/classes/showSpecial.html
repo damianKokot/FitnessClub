@@ -17,8 +17,12 @@
             <td>{{ class.max_participants - class.empty_places }}</td>
             <td>
                <button class="btn btn-success" ng-if='["admin"].includes(currentUser.permissions)' ng-click="edit(class)">Edytuj</button>
-               <div class="btn btn-success assignMe" onclick="window.myButton=this" ng-click="reservation()">
+               <div ng-if="currentUser.name !== class.trainerName" class="btn btn-success assignMe" onclick="window.myButton=this" ng-click="reservation()">
                   <div class="plus-minus" ng-class="{collapsed: !class.reserved}" title="{{ class.id }}"></div>
+               </div>
+               <div ng-if="currentUser.name === class.trainerName" class="btn btn-danger" 
+                  onclick="alert('Jesteś przypisany jako trener')">
+                  <div class="plus-minus"></div>
                </div>
             </td>
          </tr>

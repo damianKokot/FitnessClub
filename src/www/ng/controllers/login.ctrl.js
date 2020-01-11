@@ -4,10 +4,9 @@ angular.module('app')
 		UserSvc.login(email, password)
 		.then(function(response){ 
 			$scope.$emit('login', response.data); 
+			staticObj.name = response.data.firstname + " " + response.data.lastname;
 		}).then(function() {
 			window.location.assign('/#/');
 		});
 	}
-	//$scope.login("kokocik1213@gmail.com", "1234");
-	//$scope.login("emil@gmail.com", "1234");
 });

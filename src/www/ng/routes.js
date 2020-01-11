@@ -1,6 +1,7 @@
 angular.module('app')
 .config(function($routeProvider){
 	$routeProvider
+	.when('/', { controller: 'HomeCtrl', templateUrl: 'home.html' })
 	.when('/register', { controller: 'RegisterCtrl', templateUrl: 'register.html'})
 	.when('/login', { controller: 'LoginCtrl', templateUrl: 'login.html'})
 	.when('/classes', { controller: 'ClassesCtrl', templateUrl: './classes/classes.html'})

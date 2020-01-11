@@ -7,7 +7,7 @@ CREATE TABLE users (
   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY NOT NULL,
   email VARCHAR(200) NOT NULL,
   password VARCHAR(200) NOT NULL,
-  permissions ENUM('normal', 'worker', 'admin') NOT NULL DEFAULT 'normal',
+  permissions ENUM('normal', 'admin') NOT NULL DEFAULT 'normal',
   lastlogin TIMESTAMP,
   firstname VARCHAR(200) NOT NULL,
   lastname VARCHAR(200) NOT NULL,
@@ -51,8 +51,3 @@ CREATE TABLE reservations (
   FOREIGN KEY (user_id) REFERENCES users(id),
   FOREIGN KEY (specific_class_id) REFERENCES specific_classes(id)
 );
-
-SOURCE Pulpit/Bazy/projekt/FitnessClub/scripts/users/indexes.sql
-SOURCE Pulpit/Bazy/projekt/FitnessClub/scripts/users/mailCheck.sql
-SOURCE Pulpit/Bazy/projekt/FitnessClub/scripts/users/phoneCheck.sql
-SOURCE Pulpit/Bazy/projekt/FitnessClub/scripts/users/passwordCheck.sql

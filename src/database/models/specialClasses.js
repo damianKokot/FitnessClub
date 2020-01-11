@@ -1,6 +1,6 @@
 const db = require('../db');
 
-module.exports.getSpecificClass = (userId, className, next) => {
+module.exports.getSpecificClass = (userId, classId, next) => {
    const query = 'SELECT s.id, t.id AS trainerId, CONCAT(u.firstname, " ", u.lastname)  AS trainerName, ' +
       't.description AS trainerDescription, ' +
       's.start, ' +
@@ -16,9 +16,9 @@ module.exports.getSpecificClass = (userId, className, next) => {
       'INNER JOIN classes AS c ON c.id = s.class_id ' +
       'INNER JOIN trainers AS t ON s.trainer_id = t.id ' +
       'INNER JOIN users AS u ON t.id = u.id ' +
-      'WHERE c.name = ?;';
+      'WHERE c.id = ?;';
    
-   db.query(query, [userId, className], (err, data) => {
+   db.query(query, [userId, classId], (err, data) => {
       next(err, data);
    });
 };
