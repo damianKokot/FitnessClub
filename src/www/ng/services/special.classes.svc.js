@@ -1,10 +1,10 @@
 angular.module('app')
 .service('SpecialClassesSvc', function ($http) {
-   this.fetch = function (className) {
+   this.fetch = function (classId) {
       return $http({
          method: 'GET',
          url: '/api/specialClasses',
-         headers: { name: className }
+         headers: { id: classId }
       });
    }
 

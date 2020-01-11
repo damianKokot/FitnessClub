@@ -1,6 +1,6 @@
 angular.module('app')
 .controller('SpecialClassesCtrl', function ($scope, SpecialClassesSvc) {
-   SpecialClassesSvc.fetch(staticObj.className)
+   SpecialClassesSvc.fetch(staticObj.classId)
    .success(function(classes) {
       $scope.classes = classes.map(item => {
          item.start = item.start.slice(0, 16);
@@ -20,7 +20,6 @@ angular.module('app')
       
       SpecialClassesSvc.reservate(action, (button.title * 1))
       .success(function(status) {
-         console.log(status)
          if(status[0][0].OK) {
             button.classList.toggle("collapsed");
          } else {
