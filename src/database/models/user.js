@@ -21,5 +21,6 @@ module.exports.listUsers = (next) => {
 };
 
 module.exports.update = (data, next) => {
-	db.query('UPDATE users SET firstname=?, lastname=?, email=?, telephone=? WHERE email=?', Object.values(data), next);
+	db.query('UPDATE users SET firstname=?, lastname=?, email=?, telephone=?, permissions=? WHERE email=?', Object.values(data), next);
 }
+

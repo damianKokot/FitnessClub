@@ -17,6 +17,10 @@
          <label>Telefon:</label>
          <input class="form-control" type="text" ng-model="data.telephone" required>
       </div>
+      <div ng-if='["admin"].includes(currentUser.permissions)' class="form-group">
+         <label>Uprawnienia:</label>
+         <input class="form-control" type="text" ng-model="data.permissions" required>
+      </div>
       <input class="btn btn-success btn-lg btn-block" type="submit" value="Zmień">
    </form>
 </div>

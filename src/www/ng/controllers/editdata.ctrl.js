@@ -1,15 +1,17 @@
 angular.module('app')
 .controller('EditDataCtrl', function ($scope, EditDataSvc) {
-	EditDataSvc.fetch().success(function(data) {
-		 $scope.data = data;
-  });
-
-	$scope.save = function (firstname, lastname, email, telephone) {
+	$scope.save = function (firstname, lastname, email, telephone, permissions) {
 		EditDataSvc.update({
-			firstname, lastname, email, telephone
-		}).then((response) => {
-			$scope.$emit('login', response.data);
-			window.location.assign("/#/myinfo");
+			firstname, lastname, email, telephone, permissions
+		}).success(() => {
+			window.location.assign("/#/mydata");
 		});
-    };  
+    };
+    
+    EditDataSvc.fetch().success(function(data) {
+        $scope.data = data;
+        console.log(data);
+	});
+
+	
 });
