@@ -14,9 +14,13 @@
 				<li ng-if='["normal", "admin"].includes(currentUser.permissions)'>
 					<a href="/#/classes">Rodzaje zajęć</a>
 				</li>
+				</li>
+					<li ng-if='["admin"].includes(currentUser.permissions)'>
+					<a href="/#/listusers">Użytkownicy w bazie</a>
+				</li>
 				<li ng-if='["normal", "admin"].includes(currentUser.permissions)'>
 					<a href="/#/myinfo">Moje dane</a>
-				</li>
+
 				<li ng-if='!currentUser'><a href="/#/register">Rejestracja</a></li>
 				<li ng-if='!currentUser'><a href="/#/login">Logowanie</a></li>
 			</ul>

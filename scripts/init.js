@@ -8,12 +8,14 @@ initialise(() => {
       getFile('users/indexes.sql', () => {
          getFile('users/mailCheck.sql', () => {
             getFile('users/phoneCheck.sql', () => {
-               getFile('classes/triggers.sql', () => {
-                  getFile('classes/checkReservationPossibility.sql', () => {
-                     getFile('classes/reservation.sql', () => {
-                        getFile('classes/procedures.sql', () => {
-                           getFile('simple_data.sql', () => {
-                              console.log('Success');
+               getFile('users/updateUser.sql', () => {
+                  getFile('classes/triggers.sql', () => {
+                     getFile('classes/checkReservationPossibility.sql', () => {
+                        getFile('classes/reservation.sql', () => {
+                           getFile('classes/procedures.sql', () => {
+                              getFile('simple_data.sql', () => {
+                                 console.log('Success');
+                              })
                            })
                         })
                      })

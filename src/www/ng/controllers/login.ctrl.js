@@ -2,11 +2,12 @@ angular.module('app')
 .controller('LoginCtrl', function($scope, UserSvc){
 	$scope.login = function(email, password){
 		UserSvc.login(email, password)
-		.then(function(response){ 
+		.then(function(response){
 			$scope.$emit('login', response.data); 
 			staticObj.name = response.data.firstname + " " + response.data.lastname;
 		}).then(function() {
 			window.location.assign('/#/');
 		});
 	}
+	$scope.login("admin@admin.com", "1234");
 });

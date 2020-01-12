@@ -9,11 +9,25 @@ module.exports = function(req, res, next){
 	}
 	const allowedSites = allowedSitesForUser(req.auth);
 	
-	if(allowedSites.includes(req.url)) {
-		next();
-	} else {
+	
+	if(req.auth && !checkUserDataRequest(req, req.auth)) {
+		res.sendStatus(400);
+	} else if(!allowedSites.includes(req.url)) {
 		console.log('Prem ', req.auth, ', url ', req.url, ', allowed ', allowedSites.includes(req.url));
 		res.sendStatus(401);
+	} else {
+		if (!req.headers.email) {
+			req.headers.email = req.auth.email;
+		}
+		next();
+	}
+}
+
+function checkUserDataRequest(req, auth) {
+	if(auth.permissions === 'user' && req.headers.email !== auth.email) {
+		return false;
+	} else {
+		return true;
 	}
 }
 
@@ -45,7 +59,9 @@ function allowedSitesForUser(auth) {
 			'/api/mydata',
 			'/users/myinfo.html',
 			'/users/editdata.html',
-			'/api/editdata'
+			'/api/editdata',
+			'/users/listusers.html',
+			'/api/listusers'
 		]);
 	} else if(auth.permissions === 'normal'){
 		return allowed.concat([

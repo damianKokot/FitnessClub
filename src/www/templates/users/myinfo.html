@@ -6,12 +6,10 @@
          </div>
    
          <p><i class="icon_phone mr20 id-color"></i>{{ data.telephone }}</p>
-   
          <p><i class="icon_mail mr20 id-color"></i>{{ data.email }}</p>
          
-         <a href="/#/editdata">
-            <button class="btn btn-success" ng-if='["normal", "admin"].includes(currentUser.permissions)'>Edytuj dane</button>
-         </a>
+         <button class="btn btn-success" ng-if='["normal", "admin"].includes(currentUser.permissions)' 
+            ng-click="edit(data)">Edytuj dane</button>
       </div>
    </div>
 </div>

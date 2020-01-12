@@ -1,6 +1,6 @@
 <div class="container">
    <h1>Edytuj dane</h1>
-   <form ng-submit="save(data.firstname, data.lastname, data.email, data.telephone)">
+   <form ng-submit="save(data.firstname, data.lastname, data.email, data.telephone, data.permissions, data.description)">
       <div class="form-group">
          <label>Imię:</label>
          <input class="form-control" type="text" ng-model="data.firstname" required>
@@ -17,6 +17,19 @@
          <label>Telefon:</label>
          <input class="form-control" type="text" ng-model="data.telephone" required>
       </div>
+
+      <div ng-if='["admin"].includes(currentUser.permissions)' class="form-group">
+         <label>Uprawnienia:</label>
+         <select class="form-control" ng-model="data.permissions">
+            <option ng-repeat="perm in ['normal', 'trainer', 'admin']" ng-value="{{ data.permissions }}">{{ perm }}</option>
+         </select>
+      </div>
+
+      <div ng-if="data.permissions === 'trainer'" class="form-group">
+         <label>Opis:</label>
+         <input class="form-control" type="text" ng-model="data.description" required>
+      </div>
+
       <input class="btn btn-success btn-lg btn-block" type="submit" value="Zmień">
    </form>
 </div>
