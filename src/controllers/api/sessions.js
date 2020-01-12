@@ -10,7 +10,7 @@ router.post('/', (req, res, next) => {
 		bcrypt.compare(req.body.password, user.password, (err, valid) => {
 			if (err) { return next(err); }
 			if (!valid) { return res.sendStatus(401) }
-
+			
 			token(req.body.email, function (err, token) {
 				if(err) { return next(err); };
 				res.send(token);

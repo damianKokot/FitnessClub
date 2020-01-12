@@ -21,6 +21,16 @@ module.exports.listUsers = (next) => {
 };
 
 module.exports.update = (data, next) => {
-	db.query('UPDATE users SET firstname=?, lastname=?, email=?, telephone=?, permissions=? WHERE email=?', Object.values(data), next);
-}
+	const values = [
+		data.firstname, 
+		data.lastname, 
+		data.email, 
+		data.telephone, 
+		data.permissions,
+		data.oldEmail,
+		data.description
+	]
+	console.log(data);
 
+	db.query("CALL updateUser(?, ?, ?, ?, ?, ?, ?)", values, next);
+}

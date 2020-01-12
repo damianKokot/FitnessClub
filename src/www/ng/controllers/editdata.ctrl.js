@@ -1,17 +1,20 @@
 angular.module('app')
 .controller('EditDataCtrl', function ($scope, EditDataSvc) {
-	$scope.save = function (firstname, lastname, email, telephone, permissions) {
+	$scope.save = function (firstname, lastname, email, telephone, permissions, description) {
 		EditDataSvc.update({
-			firstname, lastname, email, telephone, permissions
-		}).success(() => {
-			window.location.assign("/#/mydata");
-		});
+			firstname, 
+			lastname, 
+			email, 
+			telephone, 
+			permissions,
+			description,
+			oldEmail: staticObj.user.email
+		})
     };
     
-    EditDataSvc.fetch().success(function(data) {
-        $scope.data = data;
-        console.log(data);
+	EditDataSvc.getUser(staticObj.user.email)
+	.then(function(res) {
+		console.log(res.data)
+		$scope.data = res.data;
 	});
-
-	
 });
